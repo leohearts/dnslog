@@ -19,7 +19,9 @@ if __name__ == '__main__':
             "forget to activate a virtual environment?"
         ) from exc
     if len(sys.argv) >= 2 and sys.argv[1] == 'runserver':
+        print("Starting Zone Resolver")
         p = multiprocessing.Process(target=zoneresolver.main)
         p.daemon = False
         p.start()
+    print("Starting Django from " + str(sys.argv))
     execute_from_command_line(sys.argv)
