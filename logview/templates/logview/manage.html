@@ -75,12 +75,10 @@
                 <td>{{ user.add_time|date:'Y-m-d H:i:s' }}</td>
 
                 <td>
-
-                  <!-- {% ifnotequal user.id 1%} -->
                   <a href="#" onclick="editUser({{user.user.id}}, {{user.user.username}}, {{user.subdomain}})">Edit</a>
+                  <!-- {% ifnotequal user.id 1%} -->
                   <a href="#" onclick="delUser({{user.user.id}})">Delete</a></td>
                   <!-- {% endifnotequal %} -->
-
                 </tr>
 
                 {% endfor %}
