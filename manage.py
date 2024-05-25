@@ -3,14 +3,10 @@ import os
 import sys
 import multiprocessing
 import zoneresolver
-from pathlib import Path
 
 
 if __name__ == '__main__':
-    
-
-    db_file = Path("db.sqlite3")
-    if not db_file.is_file():
+    if not os.path.isfile("db.sqlite3"):
         os.system("cp db.init.sqlite3 db.sqlite3")
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dnslog.settings')
