@@ -43,8 +43,8 @@ def index(request):
 				if usersubdomain:
 					weblog = WebLog(user=usersubdomain[0].user, ip=realip, path=path, header=headers, body=body)
 					weblog.save()
-					return HttpResponse('good boy')
-		return HttpResponse('bad boy')
+					return HttpResponse('good cat')
+		return HttpResponse('bad cat')
 	else:
 		pass
 
