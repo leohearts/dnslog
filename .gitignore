@@ -1,1 +1,2 @@
 dnslog/settings.py
+db.sqlite3
