@@ -242,7 +242,7 @@ def manage_user_edit(request):
 			subdomain = randomStr
 		else:
 			checkSubdomain = UserSubDomain.objects.filter(subdomain=subdomain)
-			if checkSubdomain and not (len(checkSubdomain) == 1 and checkSubdomain[0].user.id != int(userid)):
+			if checkSubdomain and not (len(checkSubdomain) == 1 and checkSubdomain[0].user.id == int(userid)):
 				ret = {'status': -1, 'msg': 'Subdomain already exists'}
 				return JsonResponse(ret)
 
