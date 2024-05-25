@@ -1,0 +1,11 @@
+version: '2'
+services:
+  dnslog:
+    image: dnslog:v1
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "127.0.0.1:8082:8000"
+      - "53:53/udp"
