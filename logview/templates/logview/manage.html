@@ -76,9 +76,9 @@
 
                 <td>
                   <a href="#" onclick="editUser({{user.user.id}}, {{user.user.username}}, {{user.subdomain}})">Edit</a>
-                  <!-- {% ifnotequal user.id 1%} -->
+                  {% ifnotequal user.id 1%}
                   <a href="#" onclick="delUser({{user.user.id}})">Delete</a></td>
-                  <!-- {% endifnotequal %} -->
+                  {% endifnotequal %}
                 </tr>
 
                 {% endfor %}
