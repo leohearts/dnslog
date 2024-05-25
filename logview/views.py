@@ -218,6 +218,63 @@ def manage_user_del(request):
 
 
 @login_required(login_url='/logview/login')
+def manage_user_edit(request):
+	user = request.user
+	if user.is_superuser:
+		userid = request.POST['id']
+		username = request.POST['username']
+		password = request.POST['password']
+		subdomain = request.POST['subdomain']
+
+		# form data check
+		if not re.match(r'^[a-zA-Z0-9]+$',  username):
+			ret = {'status': -1, 'msg': 'username not vaild!'}
+			return JsonResponse(ret)
+		if password == '':
+			ret = {'status': -1, 'msg': 'password can not be empty!'}
+			return JsonResponse(ret)
+
+		if subdomain == '':
+			randomStr = ''.join(random.sample(string.ascii_letters + string.digits, 5))
+			checkSubdomain = UserSubDomain.objects.filter(subdomain=randomStr)
+			while checkSubdomain:
+				randomStr = ''.join(random.sample(string.ascii_letters + string.digits, 5))
+			subdomain = randomStr
+		else:
+			checkSubdomain = UserSubDomain.objects.filter(subdomain=subdomain)
+			if checkSubdomain:
+				ret = {'status': -1, 'msg': 'subdomain already exist!'}
+				return JsonResponse(ret)
+
+
+		# infomation exist check
+		checkUser = User.objects.filter(username=username)
+		if checkUser:
+			ret = {'status': -1, 'msg': 'username already exist!'}
+			return JsonResponse(ret)
+
+		# database
+		from django.db import transaction
+		try:
+			user = User.objects.get(id=userid)
+			usersubdomain = UserSubDomain.objects.get(user=user)
+			with transaction.atomic():
+				usersubdomain.subdomain = subdomain
+				usersubdomain.save()
+				user.set_password(password)
+				user.username = username
+				user.save()
+				ret = {'status': 1, 'msg': 'Ok'}
+				return JsonResponse(ret)
+		except Exception as e:
+			# print(e)
+			ret = {'status': 1, 'msg': e}
+			return JsonResponse(ret)
+	else:
+		return redirect('/logview/dnslog')
+
+
+@login_required(login_url='/logview/login')
 def manage_user_add(request):
 	user = request.user
 	if user.is_superuser:

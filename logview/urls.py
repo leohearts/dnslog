@@ -13,5 +13,6 @@ urlpatterns = [
 	path('manage', views.manage, name='manage'),
 	path('manage/add', views.manage_user_add, name='manage_user_add'),
 	path('manage/del', views.manage_user_del, name='manage_user_del'),
+    path('manage/edit', views.manage_user_edit,  name='manage_user_edit')
 	re_path('.*', views.index),
 ]
