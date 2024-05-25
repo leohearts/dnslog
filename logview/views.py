@@ -228,10 +228,10 @@ def manage_user_edit(request):
 
 		# form data check
 		if not re.match(r'^[a-zA-Z0-9]+$',  username):
-			ret = {'status': -1, 'msg': 'username not vaild!'}
+			ret = {'status': -1, 'msg': 'Invalid username'}
 			return JsonResponse(ret)
 		if password == '':
-			ret = {'status': -1, 'msg': 'password can not be empty!'}
+			ret = {'status': -1, 'msg': 'Password can not be empty'}
 			return JsonResponse(ret)
 
 		if subdomain == '':
@@ -242,15 +242,15 @@ def manage_user_edit(request):
 			subdomain = randomStr
 		else:
 			checkSubdomain = UserSubDomain.objects.filter(subdomain=subdomain)
-			if checkSubdomain:
-				ret = {'status': -1, 'msg': 'subdomain already exist!'}
+			if checkSubdomain and not (len(checkSubdomain) == 1 and checkSubdomain[0].user.id != int(userid)):
+				ret = {'status': -1, 'msg': 'Subdomain already exists'}
 				return JsonResponse(ret)
 
 
 		# infomation exist check
 		checkUser = User.objects.filter(username=username)
-		if checkUser:
-			ret = {'status': -1, 'msg': 'username already exist!'}
+		if checkUser and not (len(checkUser) == 1 and checkUser[0].id == int(userid)):
+			ret = {'status': -1, 'msg': 'Username already exists'}
 			return JsonResponse(ret)
 
 		# database
@@ -284,10 +284,10 @@ def manage_user_add(request):
 
 		# form data check
 		if not re.match(r'^[a-zA-Z0-9]+$',  username):
-			ret = {'status': -1, 'msg': 'username not vaild!'}
+			ret = {'status': -1, 'msg': 'Invalid username'}
 			return JsonResponse(ret)
 		if password == '':
-			ret = {'status': -1, 'msg': 'password can not be empty!'}
+			ret = {'status': -1, 'msg': 'Password can not be empty'}
 			return JsonResponse(ret)
 
 		if subdomain == '':
@@ -299,14 +299,14 @@ def manage_user_add(request):
 		else:
 			checkSubdomain = UserSubDomain.objects.filter(subdomain=subdomain)
 			if checkSubdomain:
-				ret = {'status': -1, 'msg': 'subdomain already exist!'}
+				ret = {'status': -1, 'msg': 'Subdomain already exists'}
 				return JsonResponse(ret)
 
 
 		# infomation exist check
 		checkUser = User.objects.filter(username=username)
 		if checkUser:
-			ret = {'status': -1, 'msg': 'username already exist!'}
+			ret = {'status': -1, 'msg': 'Username already exists'}
 			return JsonResponse(ret)
 
 		# database
