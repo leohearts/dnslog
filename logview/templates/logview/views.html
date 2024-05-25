@@ -10,7 +10,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>记录</title>
+    <title>Records</title>
 
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
@@ -241,16 +241,16 @@
         <div class="bs" data-example-id="hoverable-table">
 
             <textarea class="form-control" rows="10" disabled>
-            你的子域名: {{userdomain}} 
-            你的Key: {{apikey}}
-            API 地址: https://{{admindomain}}/api/{apikey}/{logtype}/{hashstr}/
+            Your subdomain: {{userdomain}} 
+            API key: {{apikey}}
+            API endpoint: https://{{admindomain}}/api/{apikey}/{logtype}/{hashstr}/
 
-              apikey: 值是长度为40位的字符串
-              logtype: 值为 dnslog 或者 weblog
-              hashstr: 关联字符串
+              apikey: string
+              logtype: [dnslog, weblog]
+              hashstr: keyod
 
-            例如：
-            判断 123.{{userdomain}} 是否有 dns 解析记录，则 API 请求地址为：https://{{admindomain}}/api/{{apikey}}/logtype/123/
+            Example:
+            To know whether 123.{{userdomain}} has been recorded, use https://{{admindomain}}/api/{{apikey}}/logtype/123/
             </textarea>
         </div>
 
