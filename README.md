@@ -32,7 +32,8 @@ git clone https://github.com/donot-wong/dnslog.git
 	2. 在域名注册商处修改example.cn的dns server为ns1.dns.com和ns2.dns.com
 
 ```
-\dnslog\settings.py
+cp dnslog/settings.template.py dnslog/settings.py
+vi dnslog/settings.py
 
 ALLOWED_HOSTS = ['.example.cn'] # 域名
 
