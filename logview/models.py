@@ -17,6 +17,7 @@ class DnsLog(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	host = models.TextField('host')
 	type = models.TextField('dns type')
+	ipaddr = models.TextField('ipaddr')
 	log_time = models.DateTimeField('time loged', auto_now_add=True)
 	class Meta:
 		ordering = ['log_time']

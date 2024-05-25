@@ -35,6 +35,7 @@ class MysqlLogger():
 
     def log_request(self, handler, request):
         domain = request.q.qname.__str__().lower()
+        ipaddr = handler.client_address[0]
         # self.default_logger.info(domain)
         if domain.endswith(settings.DNS_DOMAIN + '.'):
             udomain = re.search(r'\.?([^\.]+)\.%s\.' % settings.DNS_DOMAIN,
@@ -45,7 +46,7 @@ class MysqlLogger():
                     user = UserSubDomain.objects.filter(subdomain__exact='@')
                 if user:
                     dnslog = DnsLog(
-                        user=user[0].user, host=domain, type=QTYPE[request.q.qtype])
+                        user=user[0].user, host=domain, type=QTYPE[request.q.qtype], ipaddr=ipaddr)
                     dnslog.save()
 
     def log_send(self, handler, data):
