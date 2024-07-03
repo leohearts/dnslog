@@ -12,11 +12,11 @@
 
     <title>Records</title>
 
-    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="/static/main.css" rel="stylesheet">
 
-    
+
 
 </head>
 
@@ -26,18 +26,18 @@
 
         <ul class="nav nav-tabs">
 
-          <li role="presentation" {% ifequal type 'dns'%}class="active"{% endifequal%}><a href="/logview/dnslog">DNSLog</a></li>
+            <li role="presentation" {% ifequal type 'dns'%}class="active" {% endifequal%}><a href="/logview/dnslog">DNSLog</a></li>
 
-          <li role="presentation" {% ifequal type 'web'%}class="active"{% endifequal%}><a href="/logview/weblog">WebLog</a></li>
-          
-          {% if user.is_superuser %}
+            <li role="presentation" {% ifequal type 'web'%}class="active" {% endifequal%}><a href="/logview/weblog">WebLog</a></li>
 
-          <li role="presentation"><a href="/logview/manage">Manage</a></li>
+            {% if user.is_superuser %}
 
-          {% endif %}
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/logview/logout">Logout</a></li>  
-          </ul>
+            <li role="presentation"><a href="/logview/manage">Manage</a></li>
+
+            {% endif %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logview/logout">Logout</a></li>
+            </ul>
         </ul>
 
         {% ifequal type 'dns'%}
@@ -46,89 +46,85 @@
 
             <table class="table table-hover">
 
-              <thead>
+                <thead>
 
-                <tr>
+                    <tr>
 
-                  <th>#</th>
+                        <th>#</th>
 
-                  <th>host</th>
+                        <th>host</th>
 
-                  <th>type</th>
+                        <th>type</th>
 
-                  <th>IP</th>
+                        <th>IP</th>
 
-                  <th>date</th>
+                        <th>date</th>
 
-                </tr>
+                    </tr>
 
-              </thead>
+                </thead>
 
-              <tbody>
+                <tbody>
 
-                {% for dnslog in dnslogs %}
+                    {% for dnslog in dnslogs %}
 
-                <tr>
+                    <tr>
 
-                <th scope="row">{{dnslog.id}}</th>
+                        <th scope="row">{{dnslog.id}}</th>
 
-                <td>{{ dnslog.host }}</td>
+                        <td>{{ dnslog.host }}</td>
 
-                <td>{{ dnslog.type }}</td>
+                        <td>{{ dnslog.type }}</td>
 
-                <td>{{ dnslog.ipaddr }}</td>
+                        <td>{{ dnslog.ipaddr }}</td>
 
-                <td>{{ dnslog.log_time|date:'Y-m-d H:i:s' }}</td>
+                        <td>{{ dnslog.log_time|date:'Y-m-d H:i:s' }}</td>
 
-                </tr>
+                    </tr>
 
-                {% endfor %}
+                    {% endfor %}
 
-              </tbody>
+                </tbody>
 
             </table>
 
             <nav>
 
-              <ul class="pagination">
+                <ul class="pagination">
 
-                <li><a class="btn btn-default" href="/clear/dnslog" role="button">clear</a></li>
+                    <li><a class="btn btn-default" href="/clear/dnslog" role="button">clear</a></li>
 
-                {% ifnotequal dnspage 1%}
+                    {% ifnotequal dnspage 1%}
 
-                <li>
+                    <li>
 
-                  <a href="/logview/dnslog?dnspage={{dnspage | add:-1}}" aria-label="Previous">
+                        <a href="/logview/dnslog?dnspage={{dnspage | add:-1}}" aria-label="Previous">
 
-                    <span aria-hidden="true">&laquo;</span>
+                            <span aria-hidden="true">&laquo;</span>
 
-                  </a>
+                        </a>
 
-                </li>
+                    </li>
 
-                {% endifnotequal%}
+                    {% endifnotequal%} {% for range in pagerange %}
 
-                {% for range in pagerange %}
+                    <li><a href="/logview/dnslog?dnspage={{range}}">{{range}}</a></li>
 
-                <li><a href="/logview/dnslog?dnspage={{range}}">{{range}}</a></li>
+                    {% endfor %} {% ifnotequal dnspage numpages%}
 
-                {% endfor %}
+                    <li>
 
-                {% ifnotequal dnspage numpages%}
+                        <a href="/logview/dnslog?dnspage={{dnspage|add:1}}" aria-label="Next">
 
-                <li>
+                            <span aria-hidden="true">&raquo;</span>
 
-                  <a href="/logview/dnslog?dnspage={{dnspage|add:1}}" aria-label="Next">
+                        </a>
 
-                    <span aria-hidden="true">&raquo;</span>
+                    </li>
 
-                  </a>
+                    {% endifnotequal%}
 
-                </li>
-
-                {% endifnotequal%}
-
-              </ul>
+                </ul>
 
             </nav>
 
@@ -136,97 +132,91 @@
 
         </div>
 
-        {% endifequal%}
-
-        {% ifequal type 'web'%}
+        {% endifequal%} {% ifequal type 'web'%}
 
         <div class="bs" data-example-id="hoverable-table">
 
             <table class="table table-hover">
 
-              <thead>
+                <thead>
 
-                <tr>
+                    <tr>
 
-                  <th>#</th>
+                        <th>#</th>
 
-                  <th>path</th>
+                        <th>path</th>
 
-                  <th>ip</th>
+                        <th>ip</th>
 
-                  <th>header</th>
+                        <th>header</th>
 
-                  <th>date</th>
+                        <th>date</th>
 
-                </tr>
+                    </tr>
 
-              </thead>
+                </thead>
 
-              <tbody>
+                <tbody>
 
-                {% for weblog in weblogs %}
+                    {% for weblog in weblogs %}
 
-                <tr>
+                    <tr>
 
-                <th scope="row">{{weblog.id}}</th>
+                        <th scope="row">{{weblog.id}}</th>
 
-                <td>{{ weblog.path }}</td>
+                        <td>{{ weblog.path }}</td>
 
-                <td>{{ weblog.ip }}</td>
+                        <td>{{ weblog.ip }}</td>
 
-                <td>{{ weblog.header }}</td>
+                        <td>{{ weblog.header }}</td>
 
-                <td>{{ weblog.log_time|date:'Y-m-d H:i:s' }}</td>
+                        <td>{{ weblog.log_time|date:'Y-m-d H:i:s' }}</td>
 
-                </tr>
+                    </tr>
 
-                {% endfor %}
+                    {% endfor %}
 
-              </tbody>
+                </tbody>
 
             </table>
 
             <nav class="center-block">
 
-              <ul class="pagination">
+                <ul class="pagination">
 
-                <li><a class="btn btn-default" href="/clear/weblog" role="button">clear</a></li>
+                    <li><a class="btn btn-default" href="/clear/weblog" role="button">clear</a></li>
 
-                {% ifnotequal webpage 1%}
+                    {% ifnotequal webpage 1%}
 
-                <li>
+                    <li>
 
-                  <a href="/logview/weblog?webpage={{webpage | add:-1}}" aria-label="Previous">
+                        <a href="/logview/weblog?webpage={{webpage | add:-1}}" aria-label="Previous">
 
-                    <span aria-hidden="true">&laquo;</span>
+                            <span aria-hidden="true">&laquo;</span>
 
-                  </a>
+                        </a>
 
-                </li>
+                    </li>
 
-                {% endifnotequal%}
+                    {% endifnotequal%} {% for range in pagerange %}
 
-                {% for range in pagerange %}
+                    <li><a href="/logview/weblog?webpage={{range}}">{{range}}</a></li>
 
-                <li><a href="/logview/weblog?webpage={{range}}">{{range}}</a></li>
+                    {% endfor %} {% ifnotequal webpage numpages%}
 
-                {% endfor %}
+                    <li>
 
-                {% ifnotequal webpage numpages%}
+                        <a href="/logview/weblog?webpage={{webpage|add:1}}" aria-label="Next">
 
-                <li>
+                            <span aria-hidden="true">&raquo;</span>
 
-                  <a href="/logview/weblog?webpage={{webpage|add:1}}" aria-label="Next">
+                        </a>
 
-                    <span aria-hidden="true">&raquo;</span>
+                    </li>
 
-                  </a>
+                    {% endifnotequal%}
 
-                </li>
-
-                {% endifnotequal%}
-
-              </ul>
+                </ul>
 
             </nav>
 
@@ -234,7 +224,7 @@
 
         {% endifequal%}
 
-<!--         {% ifequal type 'info' %}
+        <!--         {% ifequal type 'info' %}
         <div class="bs" data-example-id="hoverable-table">
             subdomain:  {{subdomain}}
             <br>
