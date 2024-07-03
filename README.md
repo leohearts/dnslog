@@ -20,18 +20,21 @@
 Docker环境
 
 2. 获取源代码
-```
-git clone https://github.com/donot-wong/dnslog.git
+
+```bash
+git clone https://github.com/leohearts/dnslog.git
 ``` 
 
 3. 修改配置
+
 首先需要准备两个域名，一个做dns服务域名(如dns.com)，一个做dnslog/weblog记录域名(如example.cn)，一个部署服务的公网ip(120.24.224.32)
+
 	1. 在dns.com域名的解析记录中增加两条A记录
 		ns1.dns.com 120.24.224.32
 		ns2.dns.com 120.24.224.32
 	2. 在域名注册商处修改example.cn的dns server为ns1.dns.com和ns2.dns.com
 
-```
+```bash
 cp dnslog/settings.template.py dnslog/settings.py
 vi dnslog/settings.py
 
@@ -48,18 +51,23 @@ SERVER_IP = '120.24.224.32' # 外网ip
 ```
 
 4. 编译镜像
-```
+
+```bash
 cd dnslog
 sudo docker build -t dnslog:v1 .
 ```
 
 5. 启动服务
-```
+
+```bash
 sudo docker run --name dnslog -d -p 53:53/udp -p 127.0.0.1:8082:8000 dnslog:v1
+# 或者
+sudo docker-compose up -d
 ```
 
 6. 配置nginx反向代理
-```
+
+```bash
 server {
 	#listen 443 ssl;
 	#listen [::]:443 ssl;
@@ -94,27 +102,35 @@ server {
 ---
 
 1. 默认密码
-donot/123456
+
+- donot/123456
+- guest/guest
 
 2. 修改密码
+
 可通过后台或使用Django命令行进行修改
 
-```
+```bash
 sudo docker exec -it dnslog /bin/bash
 cd /usr/src/app
 python manage.py changepassword donot
 ```
 
 3. 记录weblog
+
 donot用户默认二级域名前缀为xxx，即访问{data}.xxx.example.cn记录下的内容对donot用户才可见，非xxx二级域名记录的log对donot用户不可见，一个用户对应一个二级域名
-```
+
+```bash
 curl http://weblog.xxx.example.cn/?this_is_a_test
 ```
+
 ![](./images/2.png)
 
 4. 记录dnslog
 donot用户默认二级域名前缀为xxx，即{data}.xxx.example.cn的解析记录对donot用户可见，非xxx二级域名下级dns解析log对donot用户不可见
+
 ![](./images/3.png)
 
 4. 用户管理
+
 ![](./images/1.png)
